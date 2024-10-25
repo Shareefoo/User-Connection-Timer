@@ -39,7 +39,7 @@ class TimerWorker(
                     userDao.updateTimeLeft(userId, currentTimeLeft)
                 }
 
-                if (!isStopped) {
+                if (currentTimeLeft == 0 && !isStopped) {
                     sendNotification(applicationContext, userId)
                 }
 

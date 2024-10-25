@@ -139,7 +139,7 @@ fun UserListScreen(viewModel: UserListViewModel) {
     var showDialog by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(modifier = Modifier.fillMaxSize().padding(bottom = 80.dp)) {
             item {
                 Row(
                     modifier = Modifier
