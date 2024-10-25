@@ -1,6 +1,7 @@
 package com.assem.usertimer
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
@@ -18,5 +19,8 @@ interface UserDao {
 
     @Query("SELECT timeLeft FROM users WHERE id = :userId")
     fun getTimeLeft(userId: Int): Flow<Int>
+
+    @Delete
+    fun delete(user: User)
 
 }

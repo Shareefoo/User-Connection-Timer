@@ -1,11 +1,8 @@
 package com.assem.usertimer
 
-import android.app.Application
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,19 +15,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -39,18 +34,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -60,21 +52,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.assem.usertimer.ui.theme.UserTimerTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
         setContent {
             UserTimerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val userListViewModel =
-                        UserListViewModel(LocalContext.current.applicationContext as Application)
-
                     val viewModel: UserListViewModel by viewModels()
                     UserListScreen(viewModel)
                 }
@@ -118,21 +103,29 @@ fun UserListItem(user: User, viewModel: UserListViewModel) {
             Text(
                 text = user.username,
                 modifier = Modifier.weight(1f),
+                textAlign = TextAlign.Center,
                 style = TextStyle(fontSize = 15.sp)
             )
             Text(
                 text = user.macAddress.formatMacAddress(),
-                modifier = Modifier.weight(1.5f),
+                modifier = Modifier.weight(2f),
+                textAlign = TextAlign.Center,
                 style = TextStyle(fontSize = 15.sp)
             )
             Text(
                 text = formattedTime, modifier = Modifier.weight(1f),
+                textAlign = TextAlign.Center,
                 style = TextStyle(fontSize = 15.sp)
             )
             IconButton(
                 modifier = Modifier.weight(0.5f),
                 onClick = { viewModel.addTimeToUser(user.id, 10 * 60) }) {
                 Icon(Icons.Filled.AddCircle, contentDescription = "Add 10 minutes")
+            }
+            IconButton(
+                modifier = Modifier.weight(0.5f),
+                onClick = { viewModel.deleteUser(user) }) {
+                Icon(Icons.Filled.Delete, contentDescription = "Delete")
             }
         }
     }
@@ -157,22 +150,32 @@ fun UserListScreen(viewModel: UserListViewModel) {
                     Text(
                         "Username",
                         modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
                     )
                     Text(
-                        "MAC",
-                        modifier = Modifier.weight(1.5f),
-                        fontWeight = FontWeight.Bold
+                        "MAC Address",
+                        modifier = Modifier.weight(2f),
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
                     )
                     Text(
                         "Time",
                         modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
                     )
                     Text(
-                        "+10m",
+                        "+10",
                         modifier = Modifier.weight(0.5f),
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        "X",
+                        modifier = Modifier.weight(0.5f),
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
                     )
                 }
             }
@@ -260,11 +263,11 @@ fun AddUserDialog(
 @Composable
 fun UserListScreenPreview() {
     UserTimerTheme {
-        val userListViewModel =
-            UserListViewModel(LocalContext.current.applicationContext as Application)
+//        val userListViewModel =
+//            UserListViewModel(LocalContext.current.applicationContext as Application)
 //        userListViewModel.addUser("User 1", "11:22:33:44")
 //        userListViewModel.addUser("User 2", "11:22:33:44")
 //        userListViewModel.addUser("User 3", "11:22:33:44")
-        UserListScreen(userListViewModel)
+//        UserListScreen(userListViewModel)
     }
 }

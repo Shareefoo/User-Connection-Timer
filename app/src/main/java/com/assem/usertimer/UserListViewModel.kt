@@ -40,7 +40,7 @@ class UserListViewModel(application: Application) : AndroidViewModel(application
             val user = User(username = username, macAddress = macAddress, timeLeft = initialTime)
             val userId = userDao.insert(user)
             startTimerWorker(user.copy(id = userId.toInt()), initialTime)
-            startTimerService(userId.toInt(), initialTime)
+//            startTimerService(userId.toInt(), initialTime)
         }
     }
 
@@ -76,6 +76,12 @@ class UserListViewModel(application: Application) : AndroidViewModel(application
             }
         }
         return timeLeftFlow.asStateFlow()
+    }
+
+    fun deleteUser(user: User) {
+        viewModelScope.launch(Dispatchers.IO) {
+            userDao.delete(user)
+        }
     }
 
     fun startTimerWorker(user: User, initialTime: Int) {
