@@ -1,4 +1,4 @@
-package com.assem.usertimer
+package com.assem.usertimer.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

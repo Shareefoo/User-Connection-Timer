@@ -1,22 +1,25 @@
-package com.assem.usertimer
+package com.assem.usertimer.service
 
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.work.*
+import com.assem.usertimer.MainActivity
+import com.assem.usertimer.R
+import com.assem.usertimer.data.local.dao.UserDao
+import com.assem.usertimer.data.local.database.AppDatabase
+import com.assem.usertimer.worker.TimerWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 
-class CountdownService : Service() {
+class TimerService : Service() {
 
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private lateinit var userDao: UserDao

@@ -1,4 +1,4 @@
-package com.assem.usertimer
+package com.assem.usertimer.util
 
 fun String.formatMacAddress(): String {
     val cleanedText = this.replace(":", "")

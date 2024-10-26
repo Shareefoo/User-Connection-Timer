@@ -1,13 +1,14 @@
-package com.assem.usertimer
+package com.assem.usertimer.worker
 
 import android.app.NotificationManager
 import android.content.Context
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.assem.usertimer.R
+import com.assem.usertimer.data.local.database.AppDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

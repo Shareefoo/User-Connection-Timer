@@ -1,9 +1,10 @@
-package com.assem.usertimer
+package com.assem.usertimer.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.assem.usertimer.data.local.entity.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao

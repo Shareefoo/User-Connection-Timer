@@ -1,4 +1,4 @@
-package com.assem.usertimer
+package com.assem.usertimer.util
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping

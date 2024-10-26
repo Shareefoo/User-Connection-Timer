@@ -1,25 +1,25 @@
-package com.assem.usertimer
+package com.assem.usertimer.ui.viewmodel
 
 import android.app.Application
 import android.content.Intent
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.assem.usertimer.data.local.database.AppDatabase
+import com.assem.usertimer.data.local.entity.User
+import com.assem.usertimer.service.TimerService
+import com.assem.usertimer.worker.TimerWorker
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import java.util.Timer
 
 class UserListViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -40,7 +40,7 @@ class UserListViewModel(application: Application) : AndroidViewModel(application
             val user = User(username = username, macAddress = macAddress, timeLeft = initialTime)
             val userId = userDao.insert(user)
             startTimerWorker(user.copy(id = userId.toInt()), initialTime)
-//            startTimerService(userId.toInt(), initialTime)
+            startTimerService(userId.toInt(), initialTime)
         }
     }
 
@@ -98,7 +98,7 @@ class UserListViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun startTimerService(userId: Int, initialTime: Int) {
-        val serviceIntent = Intent(getApplication(), CountdownService::class.java)
+        val serviceIntent = Intent(getApplication(), TimerService::class.java)
         serviceIntent.putExtra("userId", userId)
         serviceIntent.putExtra("initialTime", initialTime)
         ContextCompat.startForegroundService(getApplication(), serviceIntent)
