@@ -1,6 +1,5 @@
 package com.assem.usertimer.ui.screens
 
-import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -18,30 +17,38 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.assem.usertimer.ui.viewmodel.UserListViewModel
 
 @Composable
-fun UserListScreen(viewModel: UserListViewModel) {
+fun UserListScreen(viewModel: UserListViewModel = viewModel()) {
 
-    val users by viewModel.users.collectAsState()
+    LaunchedEffect(key1 = Unit) {
+        viewModel.init()
+    }
+
+    val users = viewModel.users
     var showDialog by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(bottom = 80.dp)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 80.dp)
+        ) {
             item {
                 Row(
                     modifier = Modifier
@@ -91,7 +98,7 @@ fun UserListScreen(viewModel: UserListViewModel) {
             AddUserDialog(
                 onDismiss = { showDialog = false },
                 onSubmit = { username, macAddress ->
-                    viewModel.addUser(username, macAddress, 10)
+                    viewModel.addUser(username, macAddress)
                 }
             )
         }
@@ -101,6 +108,5 @@ fun UserListScreen(viewModel: UserListViewModel) {
 @Preview(showBackground = true)
 @Composable
 fun UserListScreenPreview() {
-    val context = LocalContext.current
-    UserListScreen(viewModel = UserListViewModel(context.applicationContext as Application))
+    UserListScreen()
 }

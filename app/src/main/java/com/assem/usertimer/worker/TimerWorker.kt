@@ -41,7 +41,7 @@ class TimerWorker(
                 }
 
                 if (currentTimeLeft == 0 && !isStopped) {
-                    sendNotification(applicationContext, userId)
+//                    sendNotification(applicationContext, userId)
                 }
 
                 Result.success()
@@ -53,19 +53,19 @@ class TimerWorker(
     }
 
 
-    private suspend fun sendNotification(context: Context, userId: Int) {
-        Log.d("DDD", "sendNotification")
-        val user = userDao.getAllUsers().first().find { it.id == userId }
-        if (user != null) {
-            val notificationManager = ContextCompat.getSystemService(context, NotificationManager::class.java)
-            val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setContentTitle("Time's up for ${user.username}")
-//                .setContentText("Please take a break.")
-                .setSmallIcon(R.drawable.ic_launcher_foreground) // Replace with your notification icon
-                .build()
-            notificationManager?.notify(user.id, notification)
-        }
-    }
+//    private suspend fun sendNotification(context: Context, userId: Int) {
+//        Log.d("DDD", "sendNotification")
+//        val user = userDao.getAllUsers().first().find { it.id == userId }
+//        if (user != null) {
+//            val notificationManager = ContextCompat.getSystemService(context, NotificationManager::class.java)
+//            val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+//                .setContentTitle("Time's up for ${user.username}")
+////                .setContentText("Please take a break.")
+//                .setSmallIcon(R.drawable.ic_launcher_foreground) // Replace with your notification icon
+//                .build()
+//            notificationManager?.notify(user.id, notification)
+//        }
+//    }
 
     companion object {
         const val CHANNEL_ID = "countdown_channel"

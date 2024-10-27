@@ -5,8 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "users")
 data class User(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val username: String,
     val macAddress: String,
-    val timeLeft: Int = 10 //3 * 60 * 60
+    val timeAdded: Long = System.currentTimeMillis(),
+    var timeLeft: Long =  (10 * 1000)
 )
