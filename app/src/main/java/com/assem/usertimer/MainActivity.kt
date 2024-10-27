@@ -6,10 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import com.assem.usertimer.ui.screens.UserListScreen
 import com.assem.usertimer.ui.viewmodel.UserListViewModel
 import com.assem.usertimer.ui.theme.UserTimerTheme
@@ -26,13 +23,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun UserListScreenPreview() {
-    UserTimerTheme {
-//        UserListScreen()
     }
 }

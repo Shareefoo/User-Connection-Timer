@@ -67,18 +67,6 @@ fun UserListScreen(viewModel: UserListViewModel) {
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
                     )
-                    Text(
-                        "+10",
-                        modifier = Modifier.weight(0.5f),
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
-                    Text(
-                        "X",
-                        modifier = Modifier.weight(0.5f),
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
                 }
             }
             items(users) { user ->
